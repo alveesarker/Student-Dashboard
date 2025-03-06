@@ -65,36 +65,60 @@ public class StudentDashboardViewController {
 
     @javafx.fxml.FXML
     public void handleAddButtonOnAction() {
-        //checking duplicate id.
-        for(Student s: studList){
-            if(Integer.parseInt(idTextField.getText()) == s.getId()){
-                alertShow("Duplicate id. Please enter a new id.");
+        // Validate input fields
+        if (idTextField.getText().isEmpty() || nameTextField.getText().isEmpty() ||
+                cgpaTextField.getText().isEmpty() || passTextField.getText().isEmpty() ||
+                dobDatePicker.getValue() == null || majorComboBox.getValue() == null ||
+                (!maleRadio.isSelected() && !femaleRadio.isSelected())) {
+
+            alertShow("Please fill in all fields.");
+            return;
+        }
+
+        // Validate ID (must be a number)
+        int id;
+        try {
+            id = Integer.parseInt(idTextField.getText());
+            if (id <= 0) {
+                alertShow("ID must be a positive integer.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            alertShow("Invalid ID. Please enter a valid integer.");
+            return;
+        }
+
+        // Check for duplicate ID
+        for (Student s : studList) {
+            if (id == s.getId()) {
+                alertShow("Duplicate ID. Please enter a new ID.");
                 return;
             }
         }
 
-        String strGender = "";
-        if (femaleRadio.isSelected()) {
-            strGender = "Female";
-        } else strGender = "Male";
-
-//      int id, String name, String gender, float cgpa, LocalDate dob, String major, String pw
-        studList.add(
-                new Student(
-                        Integer.parseInt(idTextField.getText()),
-                        nameTextField.getText(),
-                        strGender,
-                        Float.parseFloat(cgpaTextField.getText()),
-                        dobDatePicker.getValue(),
-                        majorComboBox.getValue(),
-                        passTextField.getText()
-                )
-        );
-        studentTableView.getItems().clear();
-
-        for (Student s : studList) {
-            studentTableView.getItems().add(s);
+        // Validate CGPA (must be a valid float between 0 and 4)
+        float cgpa;
+        try {
+            cgpa = Float.parseFloat(cgpaTextField.getText());
+            if (cgpa < 0.0 || cgpa > 4.0) {
+                alertShow("CGPA must be between 0.0 and 4.0.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            alertShow("Invalid CGPA. Please enter a valid number.");
+            return;
         }
+
+        // Determine gender
+        String strGender = femaleRadio.isSelected() ? "Female" : "Male";
+
+        // Add student to list
+        studList.add(new Student(id, nameTextField.getText(), strGender, cgpa,
+                dobDatePicker.getValue(), majorComboBox.getValue(), passTextField.getText()));
+
+        // Refresh table
+        studentTableView.getItems().clear();
+        studentTableView.getItems().addAll(studList);
     }
 
     @javafx.fxml.FXML
@@ -102,13 +126,16 @@ public class StudentDashboardViewController {
         studentTableView.getItems().clear();
 
         for (Student s : studList) {
-            if (filteredMajorComboBox.getValue().equals(s.getMajor()) && filteredGenderComboBox.getValue().equals(s.getGender()) && Float.parseFloat(filteredCgpaTextField.getText()) <= s.getCgpa()) {
+            if (filteredMajorComboBox.getValue().equals(s.getMajor()) &&
+                    filteredGenderComboBox.getValue().equals(s.getGender()) &&
+                    Float.parseFloat(filteredCgpaTextField.getText()) <= s.getCgpa()) {
+
                 studentTableView.getItems().add(s);
             }
         }
     }
 
-    public void alertShow(String alertMessage){
+    public void alertShow(String alertMessage) {
         Alert a = new Alert(Alert.AlertType.ERROR);
         a.setContentText(alertMessage);
         a.showAndWait();
