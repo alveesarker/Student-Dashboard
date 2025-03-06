@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="709.0" prefWidth="867.0" xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.studentdashboard.StudentDashboardViewController">
+    <children>
+        <TextField fx:id="idTextField" layoutX="146.0" layoutY="27.0"/>
+        <Text layoutX="60.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter id:"/>
+        <TextField fx:id="nameTextField" layoutX="146.0" layoutY="75.0"/>
+        <Text layoutX="60.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Name:"/>
+        <Text layoutX="60.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender:"/>
+        <RadioButton fx:id="maleRadio" layoutX="116.0" layoutY="125.0" mnemonicParsing="false" text="Male">
+            <toggleGroup>
+                <ToggleGroup fx:id="gender"/>
+            </toggleGroup>
+        </RadioButton>
+        <RadioButton fx:id="femaleRadio" layoutX="177.0" layoutY="125.0" mnemonicParsing="false" text="Female"
+                     toggleGroup="$gender"/>
+        <TextField fx:id="cgpaTextField" layoutX="145.0" layoutY="155.0"/>
+        <Text layoutX="59.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter cgpa:"/>
+        <Text layoutX="319.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Password:"/>
+        <PasswordField fx:id="passTextField" layoutX="420.0" layoutY="27.0"/>
+        <ComboBox fx:id="majorComboBox" layoutX="317.0" layoutY="75.0" prefHeight="26.0" prefWidth="252.0"
+                  promptText="select major"/>
+        <DatePicker fx:id="dobDatePicker" layoutX="317.0" layoutY="142.0" prefHeight="26.0" prefWidth="252.0"
+                    promptText="enter date of birth"/>
+        <Button layoutX="51.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleAddButtonOnAction"
+                prefHeight="26.0" prefWidth="252.0" text="Add"/>
+        <TextField fx:id="filteredCgpaTextField" layoutX="164.0" layoutY="278.0"/>
+        <Text layoutX="46.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter minimum cgpa:"/>
+        <ComboBox fx:id="filteredGenderComboBox" layoutX="130.0" layoutY="314.0" prefHeight="26.0" prefWidth="182.0"
+                  promptText="select gender"/>
+        <ComboBox fx:id="filteredMajorComboBox" layoutX="130.0" layoutY="349.0" prefHeight="26.0" prefWidth="182.0"
+                  promptText="select major"/>
+        <Button layoutX="337.0" layoutY="349.0" mnemonicParsing="false" onAction="#handleLoadButtonOnAction"
+                prefHeight="26.0" prefWidth="252.0" text="Load table with filtered data"/>
+        <TableView fx:id="studentTableView" layoutX="46.0" layoutY="438.0" prefHeight="237.0" prefWidth="782.0">
+            <columns>
+                <TableColumn fx:id="idColumn" prefWidth="105.59998321533203" text="ID"/>
+                <TableColumn fx:id="nameColumn" prefWidth="224.79998779296875" text="Name"/>
+                <TableColumn fx:id="genderColumn" prefWidth="100.79998779296875" text="Gender"/>
+                <TableColumn fx:id="dobColumn" prefWidth="118.39999389648438" text="dob"/>
+                <TableColumn fx:id="majorColumn" prefWidth="140.800048828125" text="Major"/>
+                <TableColumn fx:id="cgpaColumn" prefWidth="92.79998779296875" text="cgpa"/>
+            </columns>
+        </TableView>
+        <Line endX="711.199951171875" layoutX="140.0" layoutY="255.0" startX="-100.0"/>
+    </children>
+</AnchorPane>
