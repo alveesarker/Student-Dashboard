@@ -65,6 +65,14 @@ public class StudentDashboardViewController {
 
     @javafx.fxml.FXML
     public void handleAddButtonOnAction() {
+        //checking duplicate id.
+        for(Student s: studList){
+            if(Integer.parseInt(idTextField.getText()) == s.getId()){
+                alertShow("Duplicate id. Please enter a new id.");
+                return;
+            }
+        }
+
         String strGender = "";
         if (femaleRadio.isSelected()) {
             strGender = "Female";
@@ -98,5 +106,11 @@ public class StudentDashboardViewController {
                 studentTableView.getItems().add(s);
             }
         }
+    }
+
+    public void alertShow(String alertMessage){
+        Alert a = new Alert(Alert.AlertType.ERROR);
+        a.setContentText(alertMessage);
+        a.showAndWait();
     }
 }
